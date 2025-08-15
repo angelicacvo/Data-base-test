@@ -1,0 +1,11 @@
+id_prestamo,hora,fecha,dias,estado,tipo,user_id,platform_id,book_id,return_id
+lon001,10:00:00,01/06/2024,14,pendiente,prestamo a domicilio,1,1,1,1
+lon002,12:00:00,09/07/2024,7,pendiente,consulta en sala,2,2,2,2
+lon003,10:00:00,13/06/2024,21,retrasado,prestamo a domicilio,3,1,7,3
+lon004,13:00:00,26/07/2024,10,retrasado,prestamo interbibliotecario,4,2,3,4
+lon005,6:00:00,28/07/2024,14,completado,prestamo a domicilio,5,1,4,5
+lon006,21:00:00,16/07/2024,7,completado,consulta en sala,6,2,5,6
+lon007,22:00:00,26/07/2024,10,pendiente,prestamo a domicilio,7,1,6,7
+lon008,16:00:00,17/06/2024,14,pendiente,prestamo interbibliotecario,8,2,7,8
+lon009,23:00:00,10/07/2024,30,retrasado,prestamo a domicilio,9,1,7,9
+lon010,23:00:00,19/06/2024,21,completado,prestamo a domicilio,10,2,8,10
