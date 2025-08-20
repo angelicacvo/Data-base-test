@@ -63,7 +63,7 @@ To run this project locally, you need:
 5. Start the server:
 
    ```bash
-   node server.js
+   node app.js
    ```
 
 6. Open the dashboard in your browser:
@@ -146,5 +146,6 @@ This README provides:
 * Stage-by-stage guidance to meet your assignment’s requirements clearly and effectively.
 
 Let me know if you'd like help writing the SQL DDL, the CSV loader, or fleshing out the dashboard code next!
+
 
 
