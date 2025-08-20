@@ -25,13 +25,6 @@ create  table returns(
 	paid_penalty int not null
 )
 
-create  table returns(
-	return_id int auto_increment primary key,
-	return_date date,
-	generated_penalty int not null,
-	paid_penalty int not null
-)
-
 create table platforms(
 	platform_id int auto_increment primary key,
 	platform varchar(90) not null	

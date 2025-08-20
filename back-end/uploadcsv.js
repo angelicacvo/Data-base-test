@@ -1,50 +1,59 @@
-const fs = require('fs');
-const csv = require('csv-parser');
-require('dotenv').config();
-const mysql = require('mysql2/promise');
+import fs from "fs";
+import csv from "csv-parser";
+import dotenv from "dotenv";
+import mysql from "mysql2/promise";
+import { insertCSVData } from "./queries/queries.js";
+import {client} from "./config/db.js";
 
+dotenv.config();
+
+// Function: uploadUsersFromCSV
 async function uploadUsersFromCSV() {
-  let client;
-
   try {
-    client = await mysql.createConnection({
-      host: process.env.HOST,
-      user: process.env.DB_USER,
-      password: process.env.PASSWORD,
-      database: process.env.DATABASE,
-      port: process.env.PORT
-    });
-
-
     const users = [];
-    fs.createReadStream('users.csv')
+    fs.createReadStream("users.csv")
       .pipe(csv())
-      .on('data', (data) => {
-        users.push(data);
+      .on("data", (data) => {
+        // Validate user data before pushing
+        if (
+          data.full_name &&
+          data.id_document &&
+          data.address &&
+          data.city &&
+          data.phone_number &&
+          data.email
+        ) {
+          users.push(data);
+        } else {
+          console.warn("Skipping invalid row:", data);
+        }
       })
-      .on('end', async () => {
+      .on("end", async () => {
         for (const user of users) {
-          const query = `
-            INSERT IGNORE INTO users(full_name, id_document, address, city, phone_number, email) 
-            VALUES (?, ?, ?, ?, ?, ?)
-          `;
-          const values = [user.full_name, user.id_document, user.address, user.city, user.phone_number, user.email];
-          await client.execute(query, values);
+          try {
+            const query = insertCSVData;
+            const values = [
+              user.full_name,
+              user.id_document,
+              user.address,
+              user.city,
+              user.phone_number,
+              user.email,
+            ];
+            await client.execute(query, values);
+          } catch (err) {
+            console.error("Error inserting user:", user, err.message);
+          }
         }
 
-        console.log('Usuarios cargados exitosamente.');
+        console.log("Users uploaded successfully.");
         await client.end();
       });
-
   } catch (err) {
-    console.error('Error cargando usuarios:', err.message || err);
+    console.error("Error loading users:", err.message || err);
     if (client) await client.end();
   }
 }
 
+export { uploadUsersFromCSV };
 
-
-
-module.exports = {
-  uploadUsersFromCSV
-};
