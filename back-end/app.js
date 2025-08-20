@@ -63,7 +63,7 @@ app.post("/upload-users", async (req, res) => {
       return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
 
-    // Trim all fields
+    // Trim all fields, initial and final spaces
     const trimmedData = {
       user_full_name: user_full_name.trim(),
       user_id_document: user_id_document.trim(),
@@ -132,7 +132,7 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// Get user by ID - MOVED BEFORE the DELETE route to avoid conflicts
+// Get user by ID 
 app.get("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
